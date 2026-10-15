@@ -174,15 +174,124 @@
             visibility: visible;
         }
 
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            color: var(--text-main);
-            text-align: center;
+        /* ----------------------------------------------------
+           DESAIN JUDUL STILISTIK (PUNISHING GRAY RAVEN STYLE)
+        ---------------------------------------------------- */
+        .pgr-header {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             width: 100%;
             margin-bottom: 25px;
+            padding: 5px 0;
         }
 
+        .pgr-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -65%);
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.035);
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+        }
+
+        .pgr-top-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 6px;
+            z-index: 1;
+        }
+
+        .pgr-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+        }
+
+        .pgr-tag {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-family: var(--font-body);
+            font-weight: 500;
+        }
+
+        .pgr-main-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            z-index: 1;
+            line-height: 1.1;
+        }
+
+        .pgr-subtitle-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+            margin-top: 4px;
+        }
+
+        .pgr-subtitle {
+            font-size: 0.78rem;
+            letter-spacing: 5px;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            font-weight: 600;
+            font-family: var(--font-body);
+        }
+
+        .pgr-gold-bar {
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-gold);
+            margin-top: 5px;
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.7);
+        }
+
+        .pgr-pointer {
+            width: 1px;
+            height: 16px;
+            background: linear-gradient(to bottom, var(--accent-gold), transparent);
+            margin-top: 8px;
+            z-index: 1;
+        }
+
+        /* ----------------------------------------------------
+           EFEK ANIMASI FADE-IN & FADE-OUT
+        ---------------------------------------------------- */
+        .fade-element {
+            opacity: 0;
+            transform: translateY(30px) scale(0.97);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: opacity, transform;
+        }
+
+        .fade-element.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* HERO SECTION STYLE */
         #hero .section-content {
             text-align: center;
             justify-content: center;
@@ -259,7 +368,6 @@
             justify-content: center;
         }
 
-        /* Map Container (Kanan) */
         .split-left {
             flex: 1;
             border-radius: 12px;
@@ -267,23 +375,17 @@
             border: 1px solid rgba(197, 160, 89, 0.3);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transition: border-color 0.4s ease;
-            height: 420px;
+            height: 380px;
         }
         
         .split-left:hover { border-color: var(--accent-gold); }
 
-        /* Detail & Specs Container (Kiri) */
         .split-right {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             gap: 20px;
-        }
-
-        .split-right .section-title {
-            text-align: left;
-            margin-bottom: 0;
         }
 
         .details-gallery {
@@ -391,7 +493,7 @@
         .potential-card img {
             width: 100%;
             height: 18vh;
-            max-height: 170px;
+            max-height: 160px;
             object-fit: cover;
             border-radius: 8px;
             transition: all 0.4s ease;
@@ -418,7 +520,6 @@
             width: 50%;
         }
 
-        /* PERBAIKAN TATA LETAK COPYRIGHT */
         .footer-copyright {
             width: 100%;
             text-align: center;
@@ -535,13 +636,15 @@
             }
 
             .hero-title { font-size: 3.2rem; }
-            .section-title { font-size: 2rem; margin-bottom: 20px; }
             
             * { cursor: auto !important; }
             #cursor-dot, #cursor-ring { display: none !important; }
             
             .nav-dots { right: 12px; }
             .nav-dot::after { display: none; }
+
+            .pgr-top-line { max-width: 90%; }
+            .pgr-watermark { font-size: 3.2rem; }
 
             .split-layout {
                 flex-direction: column;
@@ -560,10 +663,6 @@
                 flex: none;
                 gap: 15px;
                 width: 100%;
-            }
-            
-            .split-right .section-title {
-                text-align: center;
             }
 
             .potential-grid { grid-template-columns: 1fr; gap: 18px; }
@@ -613,11 +712,28 @@
         <!-- Page 2: Detail Lokasi & Spesifikasi -->
         <section id="details">
             <div class="section-content">
+                
+                <!-- Judul Bergaya PGR dengan Aksen Gold -->
+                <div class="pgr-header fade-element">
+                    <div class="pgr-watermark">LOCATION</div>
+                    <div class="pgr-top-line">
+                        <span class="pgr-line"></span>
+                        <span class="pgr-tag">· PAGE 02 ·</span>
+                        <span class="pgr-line"></span>
+                        <span class="pgr-tag">SPECIFICATIONS</span>
+                        <span class="pgr-line"></span>
+                    </div>
+                    <h2 class="pgr-main-title">Location Details</h2>
+                    <div class="pgr-subtitle-box">
+                        <span class="pgr-subtitle">& Specifications</span>
+                        <div class="pgr-gold-bar"></div>
+                    </div>
+                    <div class="pgr-pointer"></div>
+                </div>
+
                 <div class="split-layout">
-                    <!-- Left: Content (Judul, Sketsa, Spesifikasi) -->
+                    <!-- Left: Content (Sketsa & Spesifikasi) -->
                     <div class="split-right">
-                        <h2 class="section-title">Location Details & Specifications</h2>
-                        
                         <div class="details-gallery">
                             <img src="img/Sketsa 1.png" alt="Sketsa Lahan 1" class="hover-target gallery-trigger" loading="lazy">
                             <img src="img/Sketsa 2.jpg" alt="Sketsa Lahan 2" class="hover-target gallery-trigger" loading="lazy">
@@ -644,7 +760,24 @@
         <!-- Page 3: Akses & Keunggulan Lokasi -->
         <section id="advantages">
             <div class="section-content">
-                <h2 class="section-title">Access & Location Advantages</h2>
+                
+                <!-- Judul Bergaya PGR dengan Aksen Gold -->
+                <div class="pgr-header fade-element">
+                    <div class="pgr-watermark">ADVANTAGES</div>
+                    <div class="pgr-top-line">
+                        <span class="pgr-line"></span>
+                        <span class="pgr-tag">· PAGE 03 ·</span>
+                        <span class="pgr-line"></span>
+                        <span class="pgr-tag">LOCATION ACCESS</span>
+                        <span class="pgr-line"></span>
+                    </div>
+                    <h2 class="pgr-main-title">Access & Location</h2>
+                    <div class="pgr-subtitle-box">
+                        <span class="pgr-subtitle">Advantages</span>
+                        <div class="pgr-gold-bar"></div>
+                    </div>
+                    <div class="pgr-pointer"></div>
+                </div>
                 
                 <div class="advantages-grid">
                     <div class="advantage-card hover-target">
@@ -674,7 +807,24 @@
         <!-- Page 4: Potensi Pengembangan -->
         <section id="potential">
             <div class="section-content">
-                <h2 class="section-title">Development Potential</h2>
+                
+                <!-- Judul Bergaya PGR dengan Aksen Gold -->
+                <div class="pgr-header fade-element">
+                    <div class="pgr-watermark">DEVELOPMENT</div>
+                    <div class="pgr-top-line">
+                        <span class="pgr-line"></span>
+                        <span class="pgr-tag">· PAGE 04 ·</span>
+                        <span class="pgr-line"></span>
+                        <span class="pgr-tag">FUTURE POTENTIAL</span>
+                        <span class="pgr-line"></span>
+                    </div>
+                    <h2 class="pgr-main-title">Development</h2>
+                    <div class="pgr-subtitle-box">
+                        <span class="pgr-subtitle">Potential</span>
+                        <div class="pgr-gold-bar"></div>
+                    </div>
+                    <div class="pgr-pointer"></div>
+                </div>
                 
                 <div class="potential-grid">
                     <div class="potential-card">
@@ -703,7 +853,7 @@
                     </div>
                 </div>
 
-                <!-- Footer Copyright (Rapi di bawah kartu terakhir) -->
+                <!-- Footer Copyright -->
                 <div class="footer-copyright">
                     &copy; 2026 @Copyright Aichi. All rights reserved.
                 </div>
@@ -759,6 +909,26 @@
                 const targetSection = document.querySelector(targetId);
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             });
+        });
+
+        // Intersection Observer for Fade In & Fade Out
+        const observerOptions = {
+            root: null,
+            threshold: 0.25
+        };
+
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('#details .fade-element, #advantages .fade-element, #potential .fade-element').forEach(el => {
+            fadeObserver.observe(el);
         });
 
         // Lightbox Gallery Logic
